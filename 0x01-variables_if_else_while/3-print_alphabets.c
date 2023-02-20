@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<ctype.h>
 
 /**
  * main - C program to print alphabets both in lower and upper cases
@@ -13,7 +14,7 @@ int main(void)
 	{
 		putchar(ch);
 	}
-	putchar('toupper(ch)');
+	putchar(toupper(ch));
 	putchar('\n');
 	return (0);
 }
