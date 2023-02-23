@@ -29,7 +29,7 @@ void print_times_table(int n)
 					_putchar(' ');
 					_putchar(k + 48);
 				}
-				if (k >= 10 && k < 100)
+				else if (k >= 10 && k < 100)
 				{
 					_putchar(',');
 					_putchar(' ');
@@ -37,7 +37,7 @@ void print_times_table(int n)
 					_putchar((k / 10) + 48);
 					_putchar((k % 10) + 48);
 				}
-				if (k >= 100)
+				else if (k >= 100)
 				{
 					_putchar(',');
 					_putchar(' ');
