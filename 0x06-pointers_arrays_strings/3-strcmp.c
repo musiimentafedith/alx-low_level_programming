@@ -16,13 +16,13 @@ int _strcmp(char *s1, char *s2)
 	{
 		if (s1[i] != s2[i])
 		{
-			j = i;
+			j = 1;
 			break
 		}
 	}
 	if (j == 1)
 	{
-		return (s1 - s2);
+		return (s[i] - s2[i]);
 	}
 	else
 		return (0);
