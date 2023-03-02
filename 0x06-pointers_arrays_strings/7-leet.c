@@ -20,6 +20,7 @@ char *leet(char *n)
 			{
 				n[i] = s2[j];
 			}
+		}
 	}
 	return (n);
 }
