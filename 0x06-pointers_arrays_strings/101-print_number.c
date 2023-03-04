@@ -35,4 +35,12 @@ void print_number(int n)
 		_putchar((n / 10) % 10 + 48);
 		_putchar(n % 10 + 48);
 	}
+	else if (n >= 10000 && n <= 99999)
+	{
+		_putchar(n / 10000 + 48);
+		_putchar((n / 1000) % 10 + 48);
+		_putchar((n / 100) % 10 + 48);
+		_putchar((n / 10) % 10 + 48);
+		_putchar(n % 10 + 48);
+	}
 }
