@@ -21,6 +21,8 @@ unsigned int _strspn(char *s, char *accept)
 				count = count + 1;
 				break;
 			}
+			else if (accet[i + 1] == '\0')
+				return (count);
 		}
 	}
 	return (count);
