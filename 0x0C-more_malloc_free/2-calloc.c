@@ -9,11 +9,11 @@
  * Return: pointer
  */
 
-void *mset(int *s, int x, n)
+void *mset(int *s, int x, unsigned int n)
 {
-	int i;
+	unsigned int i;
 
-	for (i = o; i < nmemb; i++)
+	for (i = 0; i < n; i++)
 	{
 		s[i] = x;
 	}
