@@ -2,6 +2,25 @@
 #include<stdlib.h>
 
 /**
+ * mset - sets memory to an int provided
+ * @s: pointer
+ * @x: int to set
+ * @n: size of elements
+ * Return: pointer
+ */
+
+void *mset(int *s, int x, n)
+{
+	int i;
+
+	for (i = o; i < nmemb; i++)
+	{
+		s[i] = x;
+	}
+	return (s);
+}
+
+/**
  * _calloc - allocates memory for an array, using malloc
  * @nmemb: number of elements
  * @size: size each element
@@ -20,10 +39,7 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 	{
 		return (NULL);
 	}
-	for (i = 0; i < nmemb; i++)
-	{
-		ptr[i] = 0;
-	}
+	ptr = mset(ptr, 0, nmemb * size);
 	return (ptr);
 }
 
