@@ -9,7 +9,7 @@
  * Return: pointer
  */
 
-void *mset(char *s, char x, unsigned int n)
+char *mset(char *s, char x, unsigned int n)
 {
 	unsigned int i;
 
