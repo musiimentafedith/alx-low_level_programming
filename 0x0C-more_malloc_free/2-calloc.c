@@ -30,7 +30,7 @@ void *mset(int *s, int x, unsigned int n)
 void *_calloc(unsigned int nmemb, unsigned int size)
 {
 	unsigned int i;
-	unsigned int *ptr;
+	int *ptr;
 
 	if (nmemb == 0 || size == 0)
 		return (NULL);
@@ -39,7 +39,7 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 	{
 		return (NULL);
 	}
-	ptr = mset(ptr, 0, nmemb * size);
+	mset(ptr, 0, nmemb * size);
 	return (ptr);
 }
 
