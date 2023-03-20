@@ -1,6 +1,6 @@
 #ifndef MACRO_H
 #define MACRO_H
 
-#define ABS(x) if (x < 0){ x = -1 * (x);} else { x;}
+#define ABS(x) ((x) < (0) ? -(x) : (x))
 
 #endif
