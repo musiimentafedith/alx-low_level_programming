@@ -52,20 +52,20 @@ char *_strcpy(char *dest, char *src)
 dog_t *new_dog(char *name, float age, char *owner)
 {
 	dog_t *ndog;
-	int lenN, lenO;
+	int len1, len2;
 
-	lenN = _strlen(name);
-	lenO = _strlen(owner);
+	len1 = _strlen(name);
+	len2 = _strlen(owner);
 	ndog = malloc(sizeof(dog_t));
 	if (ndog == NULL)
 		return (NULL);
-	ndog->name = malloc(sizeof(char) * (lenN + 1));
+	ndog->name = malloc(sizeof(char) * (len1 + 1));
 	if (ndog->name == NULL)
 	{
 		free(ndog);
 		return (NULL);
 	}
-	ndog->owner = malloc(sizeof(char) * (lenO + 1));
+	ndog->owner = malloc(sizeof(char) * (len2 + 1));
 	if (ndog->owner == NULL)
 	{
 		free(ndog->name);
