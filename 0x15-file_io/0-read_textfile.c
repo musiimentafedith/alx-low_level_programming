@@ -9,23 +9,26 @@
 
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	FILE *fp;
-	ssize_t  no_letters = 0;
-	char ch;
-	size_t i;
+	int fd;
+	ssize_t  no_letters;
+	char *file = NULL;
+	ssize_t no_letters_read;
 
 	if (filename == NULL)
 		return (0);
-	fp = fopen(filename, "r");
-	if (fp == NULL)
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 		return (0);
-	for (i = 0; i < letters; i++)
-	{
-		ch = fgetc(fp);
-		if (ch == -1)
-			break;
-		write(STDOUT_FILENO, &ch, 1);
-		no_letters++;
-	}
+	file = malloc(sizeof(char) * letters);
+	if (file == NULL)
+		return (0);
+	no_letters_read = read(fd, file, letters);
+	if (no_letters_read == -1)
+		return (0);
+	no_letters = write(STDOUT_FILENO, file, no_letters_read);
+	if (no_letters == -1)
+		return (0);
+	free(file);
+	close(fd);
 	return (no_letters);
 }
