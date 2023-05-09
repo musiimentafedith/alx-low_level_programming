@@ -39,9 +39,7 @@ void check_arg_count(int ac)
 int main(int ac, char **av)
 {
 	int file_d_from, file_d_to, read_from, written_to;
-	struct stat st;
 	char *buff;
-	size_t size_from;
 
 	check_arg_count(ac);
 	file_d_from = open(av[1], O_RDONLY);
@@ -50,12 +48,10 @@ int main(int ac, char **av)
 		dprintf(2, "Error: Can't read from file %s\n", av[1]);
 		exit(98);
 	}
-	stat(av[1], &st);
-	size_from = st.st_size;
-	buff = malloc(sizeof(char) * size_from);
+	buff = malloc(sizeof(char) * 1024);
 	if (buff == NULL)
 		return (0);
-	read_from = read(file_d_from, buff, size_from);
+	read_from = read(file_d_from, buff, 1024);
 	if (read_from == -1)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", av[1]);
@@ -67,7 +63,7 @@ int main(int ac, char **av)
 		dprintf(2, "Error: Can't write to %s\n", av[2]);
 		exit(99);
 	}
-	written_to = write(file_d_to, buff, size_from);
+	written_to = write(file_d_to, buff, 1024);
 	if (written_to == -1)
 	{
 		dprintf(2, "Error: Can't write to %s\n", av[2]);
