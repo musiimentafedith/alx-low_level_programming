@@ -36,7 +36,7 @@ char *create_buff(char *file)
 }
 
 /**
- * close_file - Closes a file
+ * _close - Closes a file
  * @fd: The file descriptor for file to be close.
  * Return: void
  */
