@@ -31,6 +31,7 @@ void _close(int fd)
 	if (i == -1)
 	{
 		dprintf(2, "Can't close fd %d\n", fd);
+		exit (100);
 	}
 }
 
@@ -63,13 +64,14 @@ int main(int ac, char **av)
 	file_d_from = open(av[1], O_RDONLY);
 	buff = create_buff(av[2]);
 	read_from = read(file_d_from, buff, 1024);
+	if (read_from == -1 || file_d_from == -1)
+	{
+		dprintf(2, "Error: Can't read from file %s\n", av[1]);
+		free(buff);
+		exit(98)
+	}
 	file_d_to = open(av[2], O_RDWR | O_CREAT | O_TRUNC, 0664);
 	do{
-		if (read_from == -1 || file_d_from == -1)
-		{
-			dprintf(2, "Error: Can't read from file %s\n", av[1]);
-			exit(98);
-		}
 		written_to = write(file_d_to, buff, 1024);
 		if (written_to == -1 || file_d_to == -1)
 		{
