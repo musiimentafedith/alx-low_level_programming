@@ -1,89 +1,89 @@
-#include"main.h"
+#include "main.h"
+
 /**
  * create_buff - create buffer
- * @file: file to read from
- * Return: pointer to newly allocated buffer
+ * @file: The name of the file
+ * Return: A pointer to the newly-allocated buffer.
  */
-
 char *create_buff(char *file)
 {
-	char *buff = NULL;
+	char *buff;
 
 	buff = malloc(sizeof(char) * 1024);
+
 	if (buff == NULL)
 	{
-		dprintf(2, "Error: Can't read from file %s\n", file);
-		exit(98);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+		exit(99);
 	}
+
 	return (buff);
 }
 
 /**
- * _close - closes an open file
- * @fd: fd for file to be closed
+ * close_file - Closes a file
+ * @fd: The file descriptor for file to be close.
  * Return: void
  */
-void _close(int fd)
+void close_file(int fd)
 {
 	int i;
 
 	i = close(fd);
+
 	if (i == -1)
 	{
-		dprintf(2, "Can't close fd %d\n", fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
 		exit(100);
 	}
 }
 
 /**
- * check_arg_count - check number of arguments provided
- * @ac: arg count to be checked
- * Return: void
- */
-void check_arg_count(int ac)
-{
-	if (ac != 3)
-	{
-		dprintf(2, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
-}
-
-/**
- * main - copies the content of a file to another file
- * @av: array of pointers
- * @ac: argument count
- * Return: an int
+ * main - Copies the contents of a file to another file.
+ * @ac: The number of arguments supplied to the program
+ * @av: An array of pointers to the arguments.
+ * Return: 0 on success.
  */
 int main(int ac, char **av)
 {
-	int file_d_from, file_d_to, read_from, written_to;
+	int from, to, rd, wr;
 	char *buff;
 
-	check_arg_count(ac);
-	file_d_from = open(av[1], O_RDONLY);
-	buff = create_buff(av[2]);
-	read_from = read(file_d_from, buff, 1024);
-	if (read_from == -1 || file_d_from == -1)
+	if (ac != 3)
 	{
-		dprintf(2, "Error: Can't read from file %s\n", av[1]);
-		free(buff);
-		exit(98);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
 	}
-	file_d_to = open(av[2], O_RDWR | O_CREAT | O_TRUNC, 0664);
+
+	buff = create_buff(av[2]);
+	from = open(av[1], O_RDONLY);
+	rd = read(from, buff, 1024);
+	to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+
 	do {
-		written_to = write(file_d_to, buff, 1024);
-		if (written_to == -1 || file_d_to == -1)
+		if (from == -1 || r == -1)
 		{
-			dprintf(2, "Error: Can't write to %s\n", av[2]);
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
+			free(buff);
+			exit(98);
+		}
+
+		wr = write(to, buff, r);
+		if (to == -1 || wr == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
 			free(buff);
 			exit(99);
 		}
-		read_from = read(file_d_from, buff, 1024);
-		file_d_to = open(av[2], O_WRONLY | O_APPEND);
-	} while (read_from > 0);
-	free(buff);
-	_close(file_d_from);
-	_close(file_d_to);
+
+		rd = read(from, buff, 1024);
+		to = open(av[2], O_WRONLY | O_APPEND);
+
+	} while (rd > 0);
+	free(buffer);
+	close_file(from);
+	close_file(to);
+
 	return (0);
 }
+
