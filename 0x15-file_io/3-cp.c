@@ -61,7 +61,7 @@ int main(int ac, char **av)
 
 	check_arg_count(ac);
 	file_d_from = open(av[1], O_RDONLY);
-	buff = create_buff(av[1]);
+	buff = create_buff(av[2]);
 	read_from = read(file_d_from, buff, 1024);
 	if (read_from == -1 || file_d_from == -1)
 	{
