@@ -12,7 +12,7 @@ char *create_buff(char *file)
 	buff = malloc(sizeof(char) * 1024);
 	if (buff == NULL)
 	{
-		dprintf(2, "Error: Can't read from file %s\n", av[1]);
+		dprintf(2, "Error: Can't read from file %s\n", file);
 		exit(98);
 	}
 	return (buff);
