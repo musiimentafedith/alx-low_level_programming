@@ -1,6 +1,21 @@
 #include "main.h"
 
 /**
+ * check_arg_count - check number of arguments provided
+ * @ac: arg count to be checked
+ * Return: void
+ */
+void check_arg_count(int ac)
+{
+	if (ac != 3)
+	{
+		dprintf(2, "Usage: cp file_from file_to\n");
+		exit(97);
+	}
+}
+
+
+/**
  * create_buff - create buffer
  * @file: The name of the file
  * Return: A pointer to the newly-allocated buffer.
@@ -25,7 +40,7 @@ char *create_buff(char *file)
  * @fd: The file descriptor for file to be close.
  * Return: void
  */
-void close_file(int fd)
+void _close(int fd)
 {
 	int i;
 
@@ -49,26 +64,21 @@ int main(int ac, char **av)
 	int from, to, rd, wr;
 	char *buff;
 
-	if (ac != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
-
+	check_arg_count(ac);
 	buff = create_buff(av[2]);
 	from = open(av[1], O_RDONLY);
 	rd = read(from, buff, 1024);
 	to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
 	do {
-		if (from == -1 || r == -1)
+		if (from == -1 || rd == -1)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
 			free(buff);
 			exit(98);
 		}
 
-		wr = write(to, buff, r);
+		wr = write(to, buff, rd);
 		if (to == -1 || wr == -1)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
@@ -80,9 +90,9 @@ int main(int ac, char **av)
 		to = open(av[2], O_WRONLY | O_APPEND);
 
 	} while (rd > 0);
-	free(buffer);
-	close_file(from);
-	close_file(to);
+	free(buff);
+	_close(from);
+	_close(to);
 
 	return (0);
 }
