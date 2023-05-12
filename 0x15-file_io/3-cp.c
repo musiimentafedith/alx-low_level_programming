@@ -64,8 +64,7 @@ int main(int ac, char **av)
 	buff = create_buff(av[2]);
 	read_from = read(file_d_from, buff, 1024);
 	file_d_to = open(av[2], O_RDWR | O_CREAT | O_TRUNC, 0664);
-	while (read_from > 0)
-	{
+	do{
 		if (read_from == -1 || file_d_from == -1)
 		{
 			dprintf(2, "Error: Can't read from file %s\n", av[1]);
@@ -80,7 +79,7 @@ int main(int ac, char **av)
 		}
 		read_from = read(file_d_from, buff, 1024);
 		file_d_to = open(av[2], O_WRONLY | O_APPEND);
-	}
+	} while (read_from > 0);
 	free(buff);
 	_close(file_d_from);
 	_close(file_d_to);
