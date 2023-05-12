@@ -1,4 +1,22 @@
 #include"main.h"
+/**
+ * create_buff - create buffer
+ * @file: file to read from
+ * Return: pointer to newly allocated buffer
+ */
+
+char *create_buff(char *file)
+{
+	char *buff = NULL;
+
+	buff = malloc(sizeof(char) * 1024);
+	if (buff == NULL)
+	{
+		dprintf(2, "Error: Can't read from file %s\n", av[1]);
+		exit(98);
+	}
+	return (buff);
+}
 
 /**
  * _close - closes an open file
@@ -43,39 +61,34 @@ int main(int ac, char **av)
 
 	check_arg_count(ac);
 	file_d_from = open(av[1], O_RDONLY);
-	if (file_d_from == -1)
-	{
-		dprintf(2, "Error: Can't read from file %s\n", av[1]);
-		exit(98);
-	}
-	buff = malloc(sizeof(char) * 1024);
-	if (buff == NULL)
-	{
-		dprintf(2, "Error: Can't read from file %s\n", av[1]);
-		exit(98);
-	}
+	buff = create_buff(av[1]);
 	read_from = read(file_d_from, buff, 1024);
-	if (read_from == -1)
+	if (read_from == -1 || file_d_from == -1)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", av[1]);
+		free(buff);
 		exit(98);
 	}
+
 	file_d_to = open(av[2], O_RDWR | O_CREAT | O_TRUNC, 0664);
-	if (file_d_to == -1)
-	{
-		dprintf(2, "Error: Can't write to %s\n", av[2]);
-		exit(99);
-	}
 	while (read_from > 0)
 	{
+		if (read_from == -1 || file_d_from == -1)
+		{
+			dprintf(2, "Error: Can't read from file %s\n", av[1]);
+			exit(98);
+		}
 		written_to = write(file_d_to, buff, 1024);
-		if (written_to == -1)
+		if (written_to == -1 || file_d_to == -1)
 		{
 			dprintf(2, "Error: Can't write to %s\n", av[2]);
+			free(buff);
 			exit(99);
 		}
 		read_from = read(file_d_from, buff, 1024);
+		file_d_to = open(av[2], O_WRONLY | O_APPEND);
 	}
+	free(buff);
 	_close(file_d_from);
 	_close(file_d_to);
 	return (1);
