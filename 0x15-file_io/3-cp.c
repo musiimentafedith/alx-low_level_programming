@@ -50,7 +50,10 @@ int main(int ac, char **av)
 	}
 	buff = malloc(sizeof(char) * 1024);
 	if (buff == NULL)
-		return (0);
+	{
+		dprintf(2, "Error: Can't read from file %s\n", av[1]);
+		exit(98);
+	}
 	read_from = read(file_d_from, buff, 1024);
 	if (read_from == -1)
 	{
@@ -63,11 +66,15 @@ int main(int ac, char **av)
 		dprintf(2, "Error: Can't write to %s\n", av[2]);
 		exit(99);
 	}
-	written_to = write(file_d_to, buff, 1024);
-	if (written_to == -1)
+	while (read_from > 0)
 	{
-		dprintf(2, "Error: Can't write to %s\n", av[2]);
-		exit(99);
+		written_to = write(file_d_to, buff, 1024);
+		if (written_to == -1)
+		{
+			dprintf(2, "Error: Can't write to %s\n", av[2]);
+			exit(99);
+		}
+		read_from = read(file_d_from, buff, 1024);
 	}
 	_close(file_d_from);
 	_close(file_d_to);
