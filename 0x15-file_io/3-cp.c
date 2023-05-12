@@ -91,5 +91,5 @@ int main(int ac, char **av)
 	free(buff);
 	_close(file_d_from);
 	_close(file_d_to);
-	return (1);
+	return (0);
 }
